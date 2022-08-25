@@ -1,8 +1,24 @@
+window.addEventListener('load', function() {
+    date = new Date();
+    year = date.getFullYear();
+    month = date.getMonth() + 1;
+    today = date.getDate();
+    tomorrow = today + 1;
+    dayAfterTomorrow = today + 2;
+    twoDaysAfterTomorrow = today + 3;
+    threeDaysAfterTomorrow = today + 4;
+    fourDaysAfterTomorrow = today + 5;
+    document.getElementById("tomorrow").innerHTML = month + "/" + tomorrow + "/" + year;
+    document.getElementById("day-after-tomorrow").innerHTML = month + "/" + dayAfterTomorrow + "/" + year;
+    document.getElementById("two-days-after-tomorrow").innerHTML = month + "/" + twoDaysAfterTomorrow + "/" + year;
+    document.getElementById("three-days-after-tomorrow").innerHTML = month + "/" + threeDaysAfterTomorrow + "/" + year;
+    document.getElementById("four-days-after-tomorrow").innerHTML = month + "/" + fourDaysAfterTomorrow + "/" + year;
+})
+
+
 let requestUrl = 'https://api.openweathermap.org/data/3.0/onecall?lat=';
 let apiKey = "dd9b1eec455fe741df6e840a4eb39da1";
 
-let inputEl = document.getElementById("city-search");
-let submitBtnEl = document.getElementById("submit-btn");
 let detroitBtnEl = document.querySelector("#detroit");
 let chicagoBtnEl = document.querySelector("#chi");
 let newYorkCityBtnEl = document.querySelector("#nyc");
@@ -31,7 +47,6 @@ let charlotteLocation = ["35.22", "-80.85"];
 let bostonLocation = ["42.36", "-71.06"];
 let sanFranciscoLocation = ["37.78", "-122.40"];
 
-//https://api.openweathermap.org/data/3.0/onecall?lat=42.33&lon=-83.04&appid=dd9b1eec455fe741df6e840a4eb39da1
 console.log(detroitBtnEl);
 detroitBtnEl.addEventListener('click', function() {
     let cityName = "Detroit"
@@ -403,8 +418,10 @@ sanFranciscoBtnEl.addEventListener('click', function() {
         })
 })
 var requestUrl2 = "http://api.openweathermap.org/geo/1.0/direct?q="
-var selectedCity = inputEl;
-function getApi() {
+
+document.getElementById("submit-btn").onclick = function() {
+    var selectedCity = document.getElementById("city-search").value;
+    console.log(selectedCity);
     let newUrl = requestUrl2 + selectedCity + "&limit=5&appid=" + apiKey;
     console.log(newUrl);
     fetch(newUrl)
@@ -415,51 +432,39 @@ function getApi() {
             console.log(data);
             console.log(data[0].lat);
             console.log(data[0].lon);
-            let inputLat = data[0].lat;
-            let inputLon = data[0].lon;
-
-            function getWeatherApi() {
-                //let cityName = selectedCity
-                let newUrl = requestUrl + inputLat + "&lon=" + inputLon + "&appid=" + apiKey + "&units=imperial";
-                fetch(newUrl)
-                    .then(function(response) {
+            document.querySelector("#today h2").innerHTML = selectedCity;
+            // selectedCityCoordinates.lat = data[0].lat;
+            // selectedCityCoordinates.lon = data[0].lon;
+            function getWeather() {
+                let finalUrl = requestUrl + data[0].lat + "&lon=" + data[0].lon + "&appid=" + apiKey + "&units=imperial";
+                console.log(finalUrl);
+                fetch(finalUrl)
+                    .then(function(response){
                         return response.json();
                     })
                     .then(function(data){
                         console.log(data);
+                        document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp;
+                        document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed; 
+                        document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity; 
+                        document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi;  
+                        document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
+                        document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
+                        document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity;
+                        document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
+                        document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
+                        document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity;
+                        document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
+                        document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
+                        document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity;
+                        document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
+                        document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
+                        document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity;
+                        document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
+                        document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
+                        document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity;
                     })
             }
-            getWeatherApi()
+            getWeather()
         })
-    }        
-
-
-    submitBtnEl.addEventListener("click", getApi);
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-// function getApi() {
-//     var randomwordrequesturl = 'https://random-word-api.herokuapp.com/word'  + lenght 
-//     console.log(randomwordrequesturl)
-//     fetch(randomwordrequesturl)
-//         .then(function(response) {
-//             return response.json();
-//         })
-//         .then(function(data){
-//             console.log(data);
-//             for (var i = 0; i < data.length; i++) {
-               
-               
-//                 }
-//         })
+    }     
