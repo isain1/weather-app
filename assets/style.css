@@ -1,10 +1,12 @@
-body {
+/*body {
     background-color: aqua;
-}
+}*/
 
 header {
     display: block;
     text-align: center;
+    background-color: rgb(60, 60, 200);
+    color: aliceblue;
 }
 
 .btn {
@@ -39,12 +41,17 @@ header {
     flex-direction: row;
 }
 
-.today {
+#today {
     border-color: black;
     border-style: solid;
     border-width: 2px;
 }
 
 .cards {
-    background-color: white;
+    background-color: rgb(12, 12, 138);
+    color: aliceblue;
+}
+
+p {
+    margin-left: 10px;
 }
