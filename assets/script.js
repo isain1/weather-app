@@ -1,3 +1,4 @@
+//The following block of code is used to populate the date for the current day and the five day forecast.
 window.addEventListener('load', function() {
     date = new Date();
     year = date.getFullYear();
@@ -15,10 +16,11 @@ window.addEventListener('load', function() {
     document.getElementById("four-days-after-tomorrow").innerHTML = month + "/" + fourDaysAfterTomorrow + "/" + year;
 })
 
-
+//Next 2 lines provide the api info we need to call the api.
 let requestUrl = 'https://api.openweathermap.org/data/3.0/onecall?lat=';
 let apiKey = "dd9b1eec455fe741df6e840a4eb39da1";
 
+//The following defines some global variables that will be used later.
 let detroitBtnEl = document.querySelector("#detroit");
 let chicagoBtnEl = document.querySelector("#chi");
 let newYorkCityBtnEl = document.querySelector("#nyc");
@@ -36,6 +38,7 @@ let dayThreeEl = document.getElementById("day-3");
 let dayFourEl = document.getElementById("day-4");
 let dayFiveEl = document.getElementById("day-5");
 
+//The following provides the latitute and longitude of our base options since those are the parameters that the api uses.
 let detroitLocation = ["42.33", "-83.04"];
 let chicagoLocation = ["41.86", "-87.64"];
 let newYorkCityLocation = ["40.75", "-73.98"];
@@ -47,26 +50,29 @@ let charlotteLocation = ["35.22", "-80.85"];
 let bostonLocation = ["42.36", "-71.06"];
 let sanFranciscoLocation = ["37.78", "-122.40"];
 
-console.log(detroitBtnEl);
+
 detroitBtnEl.addEventListener('click', function() {
     let cityName = "Detroit"
-    let newUrl = requestUrl + detroitLocation[0] + "&lon=" + detroitLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let newUrl = requestUrl + detroitLocation[0] + "&lon=" + detroitLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
     fetch(newUrl)
         .then(function(response) {
             return response.json();
         })
         .then(function(data){
+            //Next 5 lines ensure that fetch request is pulling in the proper data.
             console.log(data);
             console.log(data.current.temp);
             console.log(data.current.humidity);
             console.log(data.current.wind_speed);
             console.log(data.current.uvi);
+            //Next 5 lines take api data and populate the fields in the current days wheather conditions.
             document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
             document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
             document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
             document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
             document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi;
+            //If statement below changes the color of the UV index depending on whether or not it is considered favorable.
             if (data.current.uvi <= 2) {
                 document.getElementById("current-uvi").style.backgroundColor = "green";
             }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
@@ -74,6 +80,7 @@ detroitBtnEl.addEventListener('click', function() {
             } else if (data.current.uvi >= 7) {
                 document.getElementById("current-uvi").style.backgroundColor = "red";
             }
+            //Next 16 lines populate the fields in our 5 day future forecast. 
             document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
             document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
             document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
@@ -91,6 +98,9 @@ detroitBtnEl.addEventListener('click', function() {
             document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
         })
 });
+
+//The Next 9 blocks of code are identical to the one above except that they are for different cities that are our base options.
+
 
 chicagoBtnEl.addEventListener('click', function() {
     let cityName = "Chicago";
@@ -487,15 +497,19 @@ sanFranciscoBtnEl.addEventListener('click', function() {
             document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
         })
 })
+
+
 var requestUrl2 = "http://api.openweathermap.org/geo/1.0/direct?q="
+//Base url for the api that determines the latitude and longitude of the users inputed location. 
+
 
 document.getElementById("submit-btn").onclick = function() {
     var selectedCity = document.getElementById("city-search").value;
     console.log(selectedCity);
-    localStorage.setItem("Previous search", selectedCity);
-    let newUrl = requestUrl2 + selectedCity + "&limit=5&appid=" + apiKey;
+    //localStorage.setItem("Previous search", selectedCity);
+    let newUrl = requestUrl2 + selectedCity + "&limit=5&appid=" + apiKey; //New url with our neccesary parameters.1
     console.log(newUrl);
-    fetch(newUrl)
+    fetch(newUrl) //Fetch request that finds the latitude and longitude of the users selected city to use as the parameters in the weather api. 
         .then(function(response) {
             return response.json();
         })
@@ -503,10 +517,8 @@ document.getElementById("submit-btn").onclick = function() {
             console.log(data);
             console.log(data[0].lat);
             console.log(data[0].lon);
-            document.querySelector("#today h2").innerHTML = selectedCity + " " + month + "/" + today + "/" + year;
-            // selectedCityCoordinates.lat = data[0].lat;
-            // selectedCityCoordinates.lon = data[0].lon;
-            function getWeather() {
+            document.querySelector("#today h2").innerHTML = selectedCity + " " + month + "/" + today + "/" + year; //Populates location field.
+            function getWeather() { //Function that takes in the data from the last api and runs it through the next api to determine the weather. 
                 let finalUrl = requestUrl + data[0].lat + "&lon=" + data[0].lon + "&appid=" + apiKey + "&units=imperial";
                 console.log(finalUrl);
                 fetch(finalUrl)
