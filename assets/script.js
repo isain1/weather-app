@@ -499,7 +499,7 @@ sanFranciscoBtnEl.addEventListener('click', function() {
 })
 
 
-var requestUrl2 = "http://api.openweathermap.org/geo/1.0/direct?q="
+var requestUrl2 = "https://api.openweathermap.org/geo/1.0/direct?q="
 //Base url for the api that determines the latitude and longitude of the users inputed location. 
 
 
