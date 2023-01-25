@@ -51,11 +51,8 @@ let bostonLocation = ["42.36", "-71.06"];
 let sanFranciscoLocation = ["37.78", "-122.40"];
 
 
-detroitBtnEl.addEventListener('click', function() {
-    let cityName = "Detroit"
-    let newUrl = requestUrl + detroitLocation[0] + "&lon=" + detroitLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
-    console.log(newUrl);
-    fetch(newUrl)
+function buttonData(url, location) {
+    fetch(url)
         .then(function(response) {
             return response.json();
         })
@@ -67,7 +64,7 @@ detroitBtnEl.addEventListener('click', function() {
             console.log(data.current.wind_speed);
             console.log(data.current.uvi);
             //Next 5 lines take api data and populate the fields in the current days wheather conditions.
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
+            document.querySelector("#today h2").innerHTML = location + " " + month + "/" + today + "/" + year;
             document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
             document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
             document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
@@ -96,412 +93,83 @@ detroitBtnEl.addEventListener('click', function() {
             document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
             document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
             document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
+        });
+};
+
+detroitBtnEl.addEventListener('click', function() {
+    let cityName = "Detroit"
+    let newUrl = requestUrl + detroitLocation[0] + "&lon=" + detroitLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
+    console.log(newUrl);
+    buttonData(newUrl, cityName);
 });
 
-//The Next 9 blocks of code are identical to the one above except that they are for different cities that are our base options.
-
-
 chicagoBtnEl.addEventListener('click', function() {
-    let cityName = "Chicago";
-    let newUrl = requestUrl + chicagoLocation[0] + "&lon=" + chicagoLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Chicago"
+    let newUrl = requestUrl + chicagoLocation[0] + "&lon=" + chicagoLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)  
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi; 
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            } 
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 newYorkCityBtnEl.addEventListener('click', function() {
-    let cityName = "New York City";
-    let newUrl = requestUrl + newYorkCityLocation[0] + "&lon=" + newYorkCityLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "New York City"
+    let newUrl = requestUrl + newYorkCityLocation[0] + "&lon=" + newYorkCityLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi; 
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            } 
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 losAngelesBtnEl.addEventListener('click', function() {
-    let cityName = "Los Angeles";
-    let newUrl = requestUrl + losAngelesLocation[0] + "&lon=" + losAngelesLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Los Angeles"
+    let newUrl = requestUrl + losAngelesLocation[0] + "&lon=" + losAngelesLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi; 
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            } 
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 houstonBtnEl.addEventListener('click', function() {
-    let cityName = "Houston";
-    let newUrl = requestUrl + houstonLocation[0] + "&lon=" + houstonLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Houston"
+    let newUrl = requestUrl + houstonLocation[0] + "&lon=" + houstonLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi;  
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            }
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 minneapolisBtnEl.addEventListener('click', function() {
-    let cityName = "Minneapolis";
-    let newUrl = requestUrl + minneapolisLocation[0] + "&lon=" + minneapolisLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Minneapolis"
+    let newUrl = requestUrl + minneapolisLocation[0] + "&lon=" + minneapolisLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi;  
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            }
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 miamiBtnEl.addEventListener('click', function() {
-    let cityName = "Miami";
-    let newUrl = requestUrl + miamiLocation[0] + "&lon=" + miamiLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Miami"
+    let newUrl = requestUrl + miamiLocation[0] + "&lon=" + miamiLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi; 
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            } 
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 charlotteBtnEl.addEventListener('click', function() {
-    let cityName = "Charlotte";
-    let newUrl = requestUrl + charlotteLocation[0] + "&lon=" + charlotteLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Charlotte"
+    let newUrl = requestUrl + charlotteLocation[0] + "&lon=" + charlotteLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi; 
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            }
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%"; 
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 bostonBtnEl.addEventListener('click', function() {
-    let cityName = "Boston";
-    let newUrl = requestUrl + bostonLocation[0] + "&lon=" + bostonLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "Boston"
+    let newUrl = requestUrl + bostonLocation[0] + "&lon=" + bostonLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi;  
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            }
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity + "%";
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
 
 sanFranciscoBtnEl.addEventListener('click', function() {
-    let cityName = "San Francisco";
-    let newUrl = requestUrl + sanFranciscoLocation[0] + "&lon=" + sanFranciscoLocation[1] + "&appid=" + apiKey + "&units=imperial";
+    let cityName = "San Francisco"
+    let newUrl = requestUrl + sanFranciscoLocation[0] + "&lon=" + sanFranciscoLocation[1] + "&appid=" + apiKey + "&units=imperial"; //Creates new url for api call that implements the required parameters.
     console.log(newUrl);
-    fetch(newUrl)
-        .then(function(response) {
-            return response.json();
-        })
-        .then(function(data){
-            console.log(data);
-            console.log(data.current.temp);
-            console.log(data.current.humidity);
-            console.log(data.current.wind_speed);
-            console.log(data.current.uvi);
-            document.querySelector("#today h2").innerHTML = cityName + " " + month + "/" + today + "/" + year;
-            document.getElementById("current-temp").innerHTML = "Temperature: " + data.current.temp + "°F";
-            document.getElementById("current-wind").innerHTML = "Wind speed: " + data.current.wind_speed + "MPH"; 
-            document.getElementById("current-humidity").innerHTML = "Humidity: " + data.current.humidity + "%"; 
-            document.getElementById("current-uvi").innerHTML = "UV Index: " + data.current.uvi;  
-            if (data.current.uvi <= 2) {
-                document.getElementById("current-uvi").style.backgroundColor = "green";
-            }  else if ((data.current.uvi > 2) && (data.current.uvi < 7)) {
-                document.getElementById("current-uvi").style.backgroundColor = "yellow";
-            } else if (data.current.uvi >= 7) {
-                document.getElementById("current-uvi").style.backgroundColor = "red";
-            }
-            document.getElementById("day1-temp").innerHTML = "Temperature: " + data.daily[1].temp.max + "°F";
-            document.getElementById("day1-wind").innerHTML = "Wind speed: " + data.daily[1].wind_speed + "MPH";
-            document.getElementById("day1-humidity").innerHTML = "Humidity: " + data.daily[1].humidity + "%";
-            document.getElementById("day2-temp").innerHTML = "Temperature: " + data.daily[2].temp.max + "°F";
-            document.getElementById("day2-wind").innerHTML = "Wind speed: " + data.daily[2].wind_speed + "MPH";
-            document.getElementById("day2-humidity").innerHTML = "Humidity: " + data.daily[2].humidity;
-            document.getElementById("day3-temp").innerHTML = "Temperature: " + data.daily[3].temp.max + "°F";
-            document.getElementById("day3-wind").innerHTML = "Wind speed: " + data.daily[3].wind_speed + "MPH";
-            document.getElementById("day3-humidity").innerHTML = "Humidity: " + data.daily[3].humidity + "%";
-            document.getElementById("day4-temp").innerHTML = "Temperature: " + data.daily[4].temp.max + "°F";
-            document.getElementById("day4-wind").innerHTML = "Wind speed: " + data.daily[4].wind_speed + "MPH";
-            document.getElementById("day4-humidity").innerHTML = "Humidity: " + data.daily[4].humidity + "%";
-            document.getElementById("day5-temp").innerHTML = "Temperature: " + data.daily[5].temp.max + "°F";
-            document.getElementById("day5-wind").innerHTML = "Wind speed: " + data.daily[5].wind_speed + "MPH";
-            document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
-        })
-})
+    buttonData(newUrl, cityName);
+});
+
 
 
 var requestUrl2 = "https://api.openweathermap.org/geo/1.0/direct?q="
 //Base url for the api that determines the latitude and longitude of the users inputed location. 
-
 
 document.getElementById("submit-btn").onclick = function() {
     var selectedCity = document.getElementById("city-search").value;
@@ -556,6 +224,6 @@ document.getElementById("submit-btn").onclick = function() {
                         document.getElementById("day5-humidity").innerHTML = "Humidity: " + data.daily[5].humidity + "%";
                     })
             }
-            getWeather()
+            getWeather();
         })
-    }     
+}     
